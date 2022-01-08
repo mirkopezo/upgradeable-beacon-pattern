@@ -9,7 +9,7 @@ contract CarFactory {
     using Counters for Counters.Counter;
 
     Counters.Counter private _carIds;
-    IBeacon beacon;
+    IBeacon private beacon;
 
     mapping(uint256 => address) private carIdToAddress;
 
