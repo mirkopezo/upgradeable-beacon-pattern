@@ -101,5 +101,18 @@ describe("Upgradeable Beacon Pattern", function () {
 
       await expect(this.carProxy.connect(attacker).refillFuel()).to.be.reverted;
     });
+
+    it("should create car proxy correctly after upgrade", async function () {
+      await this.carBeacon.upgradeTo(this.carV2.address);
+
+      await this.carFactory.buildCar("Ferrari", 55, 2500);
+
+      const carProxyAddress = await this.carFactory.getCarAddress(1);
+      this.carProxy = await ethers.getContractAt("CarV2", carProxyAddress);
+
+      expect(await this.carProxy.brand()).to.eq("Ferrari");
+      expect(await this.carProxy.fuelLevel()).to.eq(55);
+      expect(await this.carProxy.mileage()).to.eq(2500);
+    });
   });
 });
