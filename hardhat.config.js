@@ -1,5 +1,7 @@
 require("@nomiclabs/hardhat-waffle");
-require('@openzeppelin/hardhat-upgrades');
+require("@openzeppelin/hardhat-upgrades");
+require("dotenv").config();
+require("@nomiclabs/hardhat-etherscan");
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -19,4 +21,15 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  */
 module.exports = {
   solidity: "0.8.11",
+  networks: {
+    rinkeby: {
+      url: process.env.RINKEBY_RPC,
+      accounts: [process.env.PRIVATE_KEY],
+    },
+  },
+  etherscan: {
+    apiKey: {
+      rinkeby: process.env.ETHERSCAN_API_KEY,
+    },
+  },
 };
